@@ -1,7 +1,7 @@
 # CSC4444Project
 
 ## Introduction
-
+This is an AI Agent designed to teach new employees at different restaurants. Designed using Ollama as the LLM allows for well thought and desriptive responses.
 
 ## Prerequisites
 Python 3.13.3
@@ -9,7 +9,7 @@ Ensure you have microsoft tools c++ 14.0 or above installed or the dependencies 
 When you run the pip install command later, there will be an error message telling you how if necessary
 
 Download Ollama locally to your computer. https://ollama.com/
-Once downloaded, run the exe file to install.
+Once downloaded, run the .exe file to install.
 After installation run these two commands in your command prompt:
 
 - ollama pull llama3.2
@@ -49,7 +49,7 @@ You must prompt the agent using one of the following restaurant names:
 - Mamma Mia
 - Le Petit Château
 
-The agent will the loop and prompt for a new question. However, it does not allow for reference to a previous question and it will simply answer the question again.
+The agent will prompt a user to ask questions regarding their new job at whichever restaurant is selected.
 
 ## Authors
     - Christian Allison

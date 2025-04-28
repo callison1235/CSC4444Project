@@ -4,17 +4,17 @@ from vector import retriever
 import pandas as pd
 import random
 
-# Load restaurant data for reference
+
 df = pd.read_csv("restaurant_policies.csv")
 restaurant_names = df["Restaurant_Name"].tolist()
 
 model = OllamaLLM(model="llama3.2")
 
-# Initialize memory storage
+
 current_restaurant = None
 conversation_history = []
 
-# Function to extract restaurant name from text
+
 def extract_restaurant_name(text):
     for name in restaurant_names:
         if name.lower() in text.lower():
@@ -32,26 +32,26 @@ These are the policies you should follow when formulating a response: {policies}
 {prompt_instruction}
 
 Answer their questions based on how you would approach the situation as a manager and try to teach the new hire how to handle a situation.
+Do not prompt a scenario to act out after answering the question.
 Question to answer: {question}
 """
 
 prompt = ChatPromptTemplate.from_template(template)
 chain = prompt | model
 
-# ---- FIRST: Ask for restaurant before anything ----
+
 print("\n----------------------------------------------------------------------\n")
 print("Welcome to your training session!")
 
-# Show a numbered list to make it easier
+
 print("\nWhich restaurant are you working at? Please select from the list below:\n")
 for idx, name in enumerate(restaurant_names, start=1):
     print(f"{idx}. {name}")
 
-# Get valid input
+
 while True:
     choice = input("\nEnter the restaurant number or name: ").strip()
     
-    # If they typed a number
     if choice.isdigit():
         choice_idx = int(choice) - 1
         if 0 <= choice_idx < len(restaurant_names):
@@ -60,7 +60,6 @@ while True:
         else:
             print("Invalid number. Please try again.")
     
-    # If they typed a name
     else:
         selected_restaurant = extract_restaurant_name(choice)
         if selected_restaurant:
@@ -71,7 +70,6 @@ while True:
 
 print(f"\nGreat! We'll be training at {current_restaurant}!\n")
 
-# ---- NOW: Begin regular question loop ----
 while True:
     print("\n----------------------------------------------------------------------\n")
     question = input("Ask me, your manager, anything you need! (q to quit): \n")
@@ -86,11 +84,9 @@ while True:
     restaurant_context = f"Currently discussing restaurant: {current_restaurant}"
     prompt_instruction = ""
 
-    # Query using restaurant + question
     combined_query = f"{current_restaurant} {question}"
     policies = retriever.invoke(combined_query)
 
-    # Run the AI
     result = chain.invoke({
         "policies": policies,
         "question": question,
