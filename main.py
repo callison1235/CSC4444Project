@@ -2,7 +2,6 @@ from langchain_ollama.llms import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
 from vector import retriever
 import pandas as pd
-import random
 
 
 df = pd.read_csv("restaurant_policies.csv")
